@@ -54,8 +54,12 @@ func LoginHandler(c *gin.Context) {
 	var u *models.LoginForm
 	if err := c.ShouldBindJSON(&u); err != nil {
 		// 请求参数有误，直接返回响应
+		// zap: 这是一个日志记录库，通常用于Go语言的应用程序。
+		// L(): L函数用于创建或获取一个Logger实例，用于记录日志
 		zap.L().Error("Login with invalid param", zap.Error(err))
-		// 判断err是不是 validator.ValidationErrors类型的errors
+
+		//将err变量尝试转换为validator.ValidationErrors类型，如果转换成功，将错误值存储在errs变量中，并将ok标志设置为true。
+		//如果转换失败，errs将持有validator.ValidationErrors类型的零值（nil），并将ok标志设置为false。
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
 			// 非validator.ValidationErrors类型错误直接返回
@@ -63,6 +67,8 @@ func LoginHandler(c *gin.Context) {
 			return
 		}
 		// validator.ValidationErrors类型错误则进行翻译
+		// removeTopStruct(): 这可能是一个函数调用，用于从错误信息中移除顶层结构的操作。有时，当使用验证器（validator）进行参数验证时
+		// 错误信息可能会包含一些额外的结构信息，这些信息可能不太需要暴露给终端用户，因此可能需要将其从错误信息中剥离。
 		ResponseErrorWithMsg(c, CodeInvalidParams, removeTopStruct(errs.Translate(trans)))
 		return
 	}
