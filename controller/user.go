@@ -18,6 +18,7 @@ import (
 func SignUpHandler(c *gin.Context) {
 	// 1.获取请求参数
 	var fo *models.RegisterForm
+	fmt.Printf("fo: %v\n", fo)
 	// 2.校验数据有效性
 	if err := c.ShouldBindJSON(&fo); err != nil {
 		// 请求参数有误，直接返回响应

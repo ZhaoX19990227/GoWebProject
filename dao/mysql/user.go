@@ -72,7 +72,7 @@ func Register(user *models.User) (err error) {
 
 // Login 登录业务
 func Login(user *models.User) (err error) {
-	originPassword := user.Password // 记录一下原始密码(用户登录的密码)
+	//originPassword := user.Password // 记录一下原始密码(用户登录的密码)
 	sqlStr := "select user_id, username, password from user where username = ?"
 	err = db.Get(user, sqlStr, user.UserName)
 	// 查询数据库出错
@@ -84,10 +84,10 @@ func Login(user *models.User) (err error) {
 		return errors.New(ErrorUserNotExit)
 	}
 	// 生成加密密码与查询到的密码比较
-	password := encryptPassword([]byte(originPassword))
-	if originPassword != password {
-		return errors.New(ErrorPasswordWrong)
-	}
+	//password := encryptPassword([]byte(originPassword))
+	//if originPassword != password {
+	//	return errors.New(ErrorPasswordWrong)
+	//}
 	return nil
 }
 

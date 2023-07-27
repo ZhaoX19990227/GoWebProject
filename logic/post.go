@@ -117,6 +117,7 @@ func GetPostList(page, size int64) ([]*models.ApiPostDetail, error) {
 		}
 		data = append(data, postDetail)
 	}
+	fmt.Println("data:", data)
 	return data, nil
 }
 
