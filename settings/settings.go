@@ -49,6 +49,10 @@ type LogConfig struct {
 }
 
 func Init() error {
+
+	/**
+	viper 是一个完整的 Go应用程序的配置解决方案
+	*/
 	// 读取配置文件
 	viper.SetConfigFile("./conf/config.yaml")
 	// 读取环境变量
@@ -56,6 +60,7 @@ func Init() error {
 	// 监听配置文件变化
 	viper.OnConfigChange(func(in fsnotify.Event) {
 		fmt.Println("夭寿啦~配置文件被人修改啦...")
+		// 将读取的配置信息保存至全局变量Conf
 		viper.Unmarshal(&Conf)
 	})
 	// 查找并读取配置文件
